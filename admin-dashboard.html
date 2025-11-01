@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administrador - Paw Friends</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body { font-family: Arial, sans-serif; background: #f4f1ee; margin:0; }
+header { background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:1rem 2rem; position:sticky; top:0; z-index:100; }
+nav { display:flex; justify-content:space-between; align-items:center; }
+.logo { display:flex; align-items:center; gap:10px; font-size:1.5rem; font-weight:bold; color:#7d8f69; }
+.logo i { font-size:2rem; }
+.nav-links { display:flex; list-style:none; gap:2rem; }
+.nav-links a { text-decoration:none; color:#333; font-weight:500; transition:color 0.3s; }
+.nav-links a:hover { color:#a68d6c; }
+.tabs { display:flex; justify-content:center; margin:20px 0; gap:10px; }
+.tab-btn { padding:10px 20px; border:none; cursor:pointer; border-radius:5px; background:#eee; transition:0.3s; }
+.tab-btn.active { background:#7d8f69; color:white; }
+.admin-dashboard { max-width:1000px; margin:30px auto; padding:20px; background:#fff; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+.admin-dashboard h2 { text-align:center; color:#7d8f69; margin-bottom:20px; border-bottom:2px solid #7d8f69; padding-bottom:10px; }
+.solicitud-card { display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; box-shadow:0 2px 5px rgba(0,0,0,0.05); }
+.solicitud-info { display:flex; align-items:center; flex-grow:1; gap:15px; }
+.solicitud-info img { width:60px; height:60px; object-fit:cover; border-radius:50%; }
+.solicitud-info div { display:flex; flex-direction:column; }
+.solicitud-info h3 { margin:0; font-size:1.1rem; color:#333; }
+.solicitud-info p { margin:0; font-size:0.9rem; color:#555; }
+.solicitud-actions button { margin-left:10px; padding:0.4rem 0.8rem; border:none; border-radius:5px; cursor:pointer; color:white; }
+.approve { background:#7d8f69; }
+.reject { background:#d9534f; }
+.approve:hover { background:#6c7d58; }
+.reject:hover { background:#c43c3c; }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+<div class="logo"><i class="fas fa-paw"></i>Paw Friends (Admin)</div>
+<ul class="nav-links">
+<li><a href="index.html">Inicio</a></li>
+<li><a href="albergues.html">Albergues</a></li>
+<li><a href="#" id="logout">Cerrar sesión</a></li>
+</ul>
+</nav>
+</header>
+
+<div class="tabs">
+<button class="tab-btn active" data-tab="albergues">Albergues</button>
+<button class="tab-btn" data-tab="proveedores">Proveedores</button>
+</div>
+
+<main>
+<section class="admin-dashboard" id="alberguesTab">
+<h2>Solicitudes de Registro de Albergues</h2>
+<div id="albergueSolicitudesContainer"></div>
+</section>
+
+<section class="admin-dashboard" id="proveedoresTab" style="display:none;">
+<h2>Solicitudes de Registro de Proveedores</h2>
+<div id="proveedorSolicitudesContainer"></div>
+</section>
+</main>
+
+<script>
+// Cambiar tabs
+const tabBtns = document.querySelectorAll('.tab-btn');
+const alberguesTab = document.getElementById('alberguesTab');
+const proveedoresTab = document.getElementById('proveedoresTab');
+
+tabBtns.forEach(btn => {
+    btn.addEventListener('click', ()=>{
+        tabBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        if(btn.dataset.tab === 'albergues'){
+            alberguesTab.style.display='block';
+            proveedoresTab.style.display='none';
+        }else{
+            alberguesTab.style.display='none';
+            proveedoresTab.style.display='block';
+        }
+    });
+});
+
+// Cargar solicitudes albergues
+function cargarSolicitudesAlbergue(){
+    const container = document.getElementById('albergueSolicitudesContainer');
+    container.innerHTML = '';
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesAlbergue')) || [];
+    if(solicitudes.length === 0){ container.innerHTML='<p style="text-align:center;">No hay solicitudes pendientes</p>'; return; }
+    solicitudes.forEach((albergue,index)=>{
+        const card=document.createElement('div'); card.className='solicitud-card';
+        card.innerHTML = `
+        <div class="solicitud-info">
+            <img src="${albergue.photo || 'https://via.placeholder.com/60'}">
+            <div>
+                <h3>${albergue.name}</h3>
+                <p>Email: ${albergue.email}</p>
+                <p>Tel: ${albergue.phone}</p>
+                <p>Dirección: ${albergue.address}</p>
+            </div>
+        </div>
+        <div class="solicitud-actions">
+            <button class="approve">Aprobar</button>
+            <button class="reject">Rechazar</button>
+        </div>
+        `;
+        container.appendChild(card);
+        card.querySelector('.approve').addEventListener('click', ()=>aprobarAlbergue(index));
+        card.querySelector('.reject').addEventListener('click', ()=>rechazarAlbergue(index));
+    });
+}
+
+// Cargar solicitudes proveedores
+function cargarSolicitudesProveedor(){
+    const container = document.getElementById('proveedorSolicitudesContainer');
+    container.innerHTML = '';
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesProveedor')) || [];
+    if(solicitudes.length === 0){ container.innerHTML='<p style="text-align:center;">No hay solicitudes pendientes</p>'; return; }
+    solicitudes.forEach((prov,index)=>{
+        const card=document.createElement('div'); card.className='solicitud-card';
+        card.innerHTML = `
+        <div class="solicitud-info">
+            <img src="${prov.logo || 'https://via.placeholder.com/60'}">
+            <div>
+                <h3>${prov.name}</h3>
+                <p>Email: ${prov.email}</p>
+                <p>Tel: ${prov.phone}</p>
+                <p>Web: ${prov.website || 'N/A'}</p>
+            </div>
+        </div>
+        <div class="solicitud-actions">
+            <button class="approve">Aprobar</button>
+            <button class="reject">Rechazar</button>
+        </div>
+        `;
+        container.appendChild(card);
+        card.querySelector('.approve').addEventListener('click', ()=>aprobarProveedor(index));
+        card.querySelector('.reject').addEventListener('click', ()=>rechazarProveedor(index));
+    });
+}
+
+// Funciones aprobar/rechazar albergue
+function aprobarAlbergue(index){
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesAlbergue'))||[];
+    let aprobados = JSON.parse(localStorage.getItem('alberguesAprobados'))||[];
+    const albergue = solicitudes[index]; aprobados.push(albergue);
+    localStorage.setItem('alberguesAprobados', JSON.stringify(aprobados));
+    solicitudes.splice(index,1); localStorage.setItem('solicitudesAlbergue', JSON.stringify(solicitudes));
+    cargarSolicitudesAlbergue();
+}
+function rechazarAlbergue(index){
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesAlbergue'))||[];
+    solicitudes.splice(index,1); localStorage.setItem('solicitudesAlbergue', JSON.stringify(solicitudes));
+    cargarSolicitudesAlbergue();
+}
+
+// Funciones aprobar/rechazar proveedor
+function aprobarProveedor(index){
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesProveedor'))||[];
+    let aprobados = JSON.parse(localStorage.getItem('proveedoresAprobados'))||[];
+    const prov = solicitudes[index]; aprobados.push(prov);
+    localStorage.setItem('proveedoresAprobados', JSON.stringify(aprobados));
+    solicitudes.splice(index,1); localStorage.setItem('solicitudesProveedor', JSON.stringify(solicitudes));
+    cargarSolicitudesProveedor();
+}
+function rechazarProveedor(index){
+    let solicitudes = JSON.parse(localStorage.getItem('solicitudesProveedor'))||[];
+    solicitudes.splice(index,1); localStorage.setItem('solicitudesProveedor', JSON.stringify(solicitudes));
+    cargarSolicitudesProveedor();
+}
+
+// Inicializar
+cargarSolicitudesAlbergue();
+cargarSolicitudesProveedor();
+</script>
+</body>
+</html>
+
+
+
+

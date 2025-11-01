@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil de Mascota - Paw Friends</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f1ee; }
+  header { background:#7d8f69; color:white; display:flex; justify-content:space-between; align-items:center; padding:1rem; }
+  header .logo { display:flex; align-items:center; gap:10px; font-size:1.5rem; font-weight:bold; }
+  header .logo i { font-size:2rem; }
+  header nav a { color:white; text-decoration:none; margin-left:20px; font-weight:bold; }
+  
+  main { max-width:1200px; margin:2rem auto; padding:1rem; display:flex; gap:2rem; flex-wrap:wrap; }
+  
+  .pet-info { flex:2; background:white; border-radius:15px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.1); display:flex; gap:20px; }
+  .pet-info img { width:350px; height:300px; object-fit:cover; border-radius:15px; }
+  .pet-details h1 { color:#7d8f69; margin-bottom:10px; }
+  .pet-details p { margin:5px 0; color:#333; font-size:0.95rem; }
+
+  .appointment { flex:1; background:white; border-radius:15px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.1); height:max-content; }
+  .appointment h2 { color:#7d8f69; margin-bottom:15px; }
+  .appointment label { display:block; margin:10px 0 5px; font-weight:bold; }
+  .appointment input, .appointment textarea, .appointment button { width:100%; padding:8px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; }
+  .appointment button { background:#7d8f69; color:white; font-weight:bold; cursor:pointer; transition:0.3s; }
+  .appointment button:hover { background:#6c7d58; }
+
+  @media(max-width:900px){
+    main { flex-direction:column; }
+    .pet-info img { width:100%; height:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><i class="fas fa-paw"></i>Paw Friends</div>
+  <nav>
+    <a href="mascotas-felices.html">Volver a Mascotas Felices</a>
+    <a href="index.html">Inicio</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Info de la mascota -->
+  <div class="pet-info">
+    <img id="petPhoto" src="" alt="Mascota">
+    <div class="pet-details">
+      <h1 id="petName"></h1>
+      <p><strong>Raza:</strong> <span id="petBreed"></span></p>
+      <p><strong>Edad:</strong> <span id="petAge"></span> años</p>
+      <p><strong>Género:</strong> <span id="petGender"></span></p>
+      <p><strong>Peso:</strong> <span id="petWeight"></span> kg</p>
+      <p><strong>Salud:</strong> <span id="petHealth"></span></p>
+      <p><strong>Descripción:</strong> <span id="petDescription"></span></p>
+    </div>
+  </div>
+
+  <!-- Formulario agendar cita -->
+  <div class="appointment">
+    <h2>Agendar cita para adopción</h2>
+    <form id="appointmentForm">
+      <input type="hidden" id="petId" value="">
+      <label for="appointmentDate">Fecha*</label>
+      <input type="date" id="appointmentDate" required>
+      
+      <label for="appointmentTime">Hora*</label>
+      <input type="time" id="appointmentTime" min="09:00" max="18:00" required>
+      
+      <label for="appointmentNotes">Motivo / Notas adicionales</label>
+      <textarea id="appointmentNotes" placeholder="Ej: Vendré con mi familia..." rows="3"></textarea>
+      
+      <button type="submit">Agendar cita</button>
+    </form>
+  </div>
+</main>
+
+<script>
+  // Obtener mascota seleccionada
+  const petId = parseInt(localStorage.getItem("selectedPetId"));
+  const pets = JSON.parse(localStorage.getItem("MascotasFelicesPets")) || [];
+  const pet = pets.find(p => p.id === petId) || pets[0]; // fallback si no encuentra
+
+  // Mostrar info
+  document.getElementById("petPhoto").src = pet.photo;
+  document.getElementById("petName").textContent = pet.name;
+  document.getElementById("petBreed").textContent = pet.breed;
+  document.getElementById("petAge").textContent = pet.age;
+  document.getElementById("petGender").textContent = pet.gender;
+  document.getElementById("petWeight").textContent = pet.weight;
+  document.getElementById("petHealth").textContent = pet.health;
+  document.getElementById("petDescription").textContent = pet.description;
+  document.getElementById("petId").value = pet.id;
+
+  // Agendar cita
+  const form = document.getElementById("appointmentForm");
+  form.addEventListener("submit", e=>{
+    e.preventDefault();
+    const date = document.getElementById("appointmentDate").value;
+    const time = document.getElementById("appointmentTime").value;
+    const notes = document.getElementById("appointmentNotes").value;
+
+    if(!date || !time) {
+      alert("Por favor completa la fecha y hora de la cita.");
+      return;
+    }
+
+    // Guardar cita en localStorage (opcional)
+    const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+    appointments.push({
+      petId: pet.id,
+      petName: pet.name,
+      date, time, notes
+    });
+    localStorage.setItem("appointments", JSON.stringify(appointments));
+
+    alert(`Cita agendada exitosamente para ${pet.name} el ${date} a las ${time}`);
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

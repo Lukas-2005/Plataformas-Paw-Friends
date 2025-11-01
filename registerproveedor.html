@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Proveedor | Paw Friends</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== ESTILO GENERAL ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #f4f1ee;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7d8f69;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #a68d6c;
+    }
+
+    .btn-login {
+      background-color: #7d8f69;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-login:hover {
+      background-color: #6c7d58;
+    }
+
+    /* ===== FORMULARIO DE REGISTRO ===== */
+    .auth-container {
+      padding: 4rem 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .auth-form {
+      width: 100%;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .auth-form h2 {
+      color: #7d8f69;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .auth-form p {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .auth-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    .auth-form input, .auth-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    .auth-form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .auth-form button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 30px;
+      background-color: #7d8f69;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .auth-form button:hover {
+      background-color: #6c7d58;
+      transform: translateY(-2px);
+    }
+
+    .auth-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .auth-link a {
+      color: #7d8f69;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .auth-link a:hover {
+      color: #6c7d58;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">
+        <i class="fas fa-paw"></i>
+        <span>Paw Friends</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="login.html" class="btn-login">Iniciar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- FORMULARIO DE REGISTRO DE PROVEEDOR -->
+  <section class="auth-container">
+    <div class="auth-form">
+      <h2>Registro de Proveedor</h2>
+      <p>Proporciona información completa de tu empresa o servicio para verificar la legitimidad y ofrecer confianza a los adoptantes.</p>
+      <form id="proveedorForm">
+        <div class="form-group">
+          <label for="name">Nombre del Proveedor/Empresa</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Dirección</label>
+          <input type="text" id="address" required>
+        </div>
+        <div class="form-group">
+          <label for="website">Sitio web / redes sociales</label>
+          <input type="text" id="website">
+        </div>
+        <div class="form-group">
+          <label for="services">Servicios / Productos ofrecidos</label>
+          <textarea id="services" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="photo">Logo o imagen representativa</label>
+          <input type="file" id="photo" accept="image/*">
+        </div>
+        <button type="submit">Registrar Proveedor</button>
+      </form>
+      <p class="auth-link">¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('proveedorForm');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const proveedorData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        website: document.getElementById('website').value,
+        services: document.getElementById('services').value,
+        photo: document.getElementById('photo').value.split('\\').pop()
+      };
+
+      // Guardar en localStorage para simulación de dashboard admin
+      let solicitudes = JSON.parse(localStorage.getItem('solicitudesProveedor')) || [];
+      solicitudes.push(proveedorData);
+      localStorage.setItem('solicitudesProveedor', JSON.stringify(solicitudes));
+
+      alert('¡Solicitud de registro de proveedor enviada correctamente!');
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>

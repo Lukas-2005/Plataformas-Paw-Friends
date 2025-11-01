@@ -1,0 +1,181 @@
+/* ===== HEADER ===== */
+header {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7d8f69;
+}
+
+.logo i {
+  font-size: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #a68d6c;
+}
+
+.nav-links .btn-login {
+  background-color: #7d8f69;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.nav-links .btn-login:hover {
+  background-color: #6c7d58;
+}
+
+/* ===== REGISTRO TIPOS ===== */
+.register-types {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.register-types h2 {
+  margin-bottom: 2rem;
+  color: #7d8f69;
+}
+
+.register-types .benefits-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.register-types .benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  max-width: 300px;
+  margin: 1rem;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.register-types .benefit-card i {
+  font-size: 2.5rem;
+  color: #a68d6c;
+  margin-bottom: 1rem;
+}
+
+.register-types .benefit-card h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.register-types .benefit-card p {
+  margin-bottom: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+.register-types .benefit-card a {
+  text-decoration: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  background-color: #7d8f69;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.register-types .benefit-card a:hover {
+  background-color: #6c7d58;
+  transform: translateY(-2px);
+}
+
+/* Oculto inicialmente el formulario */
+.auth-container.hidden {
+  display: none;
+}
+
+/* ===== FORMULARIO DE REGISTRO ===== */
+.auth-container {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.auth-form h2 {
+  color: #7d8f69;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 30px;
+  background-color: #7d8f69;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-form button:hover {
+  background-color: #6c7d58;
+  transform: translateY(-2px);
+}

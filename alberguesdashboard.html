@@ -1,0 +1,69 @@
+<script>
+// Manejo logout
+document.getElementById('logout').addEventListener('click', ()=>{
+    localStorage.removeItem('loggedUser');
+    window.location='login.html';
+});
+
+// Guardar info del albergue
+const infoForm = document.getElementById('albergueInfoForm');
+infoForm.addEventListener('submit', e=>{
+    e.preventDefault();
+    const albergueInfo = {
+        description: document.getElementById('description').value,
+        mission: document.getElementById('mission').value,
+        vision: document.getElementById('vision').value
+    };
+    localStorage.setItem('MascotasFelicesInfo', JSON.stringify(albergueInfo));
+    alert('Información del albergue guardada correctamente.');
+});
+
+// Manejo mascotas
+const petForm = document.getElementById('petForm');
+const petsGrid = document.getElementById('petsGrid');
+
+function cargarMascotas(){
+    petsGrid.innerHTML='';
+    let pets = JSON.parse(localStorage.getItem('MascotasFelicesPets')) || [];
+    pets.forEach(p=>{
+        const card = document.createElement('div'); card.className='pet-card';
+        card.innerHTML=`
+            <img src="${p.photo||'https://via.placeholder.com/250'}" alt="${p.name}">
+            <h4>${p.name}</h4>
+            <p>Edad: ${p.age} años</p>
+            <p>Peso: ${p.weight} kg</p>
+            <p>Salud: ${p.health}</p>
+            <p>Vacunas: ${p.vaccines}</p>
+            <p>Esterilizado: ${p.sterilized}</p>
+            <p>Género: ${p.gender}</p>
+            <p>Tamaño: ${p.size}</p>
+            <p>${p.description}</p>
+        `;
+        petsGrid.appendChild(card);
+    });
+}
+
+petForm.addEventListener('submit', e=>{
+    e.preventDefault();
+    const petData = {
+        name: document.getElementById('petName').value,
+        age: document.getElementById('petAge').value,
+        weight: document.getElementById('petWeight').value,
+        health: document.getElementById('petHealth').value,
+        vaccines: document.getElementById('petVaccines').value,
+        sterilized: document.getElementById('petSterilized').value,
+        gender: document.getElementById('petGender').value,
+        size: document.getElementById('petSize').value,
+        description: document.getElementById('petDescription').value,
+        photo: document.getElementById('petPhoto').value.split('\\').pop()
+    };
+    let pets = JSON.parse(localStorage.getItem('MascotasFelicesPets')) || [];
+    pets.push(petData);
+    localStorage.setItem('MascotasFelicesPets', JSON.stringify(pets));
+    cargarMascotas();
+    petForm.reset();
+});
+
+document.addEventListener('DOMContentLoaded', cargarMascotas);
+</script>
+

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | Paw Friends</title>
+  <link rel="stylesheet" href="register.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== HEADER ===== */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7d8f69;
+    }
+    .logo i {
+      font-size: 2rem;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #a68d6c;
+    }
+    .btn-login {
+      background-color: #7d8f69;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .btn-login:hover {
+      background-color: #6c7d58;
+    }
+
+    /* ===== REGISTRO TIPOS ===== */
+    .register-types {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .register-types h2 {
+      margin-bottom: 2rem;
+      color: #7d8f69;
+    }
+    .register-types .benefits-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .register-types .benefit-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      max-width: 300px;
+      margin: 1rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .register-types .benefit-card i {
+      font-size: 2.5rem;
+      color: #a68d6c;
+      margin-bottom: 1rem;
+    }
+    .register-types .benefit-card p {
+      margin-bottom: 1rem;
+      color: #555;
+      text-align: center;
+    }
+    .register-types .benefit-card a {
+      text-decoration: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background-color: #7d8f69;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .register-types .benefit-card a:hover {
+      background-color: #6c7d58;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .register-types .benefits-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">
+        <i class="fas fa-paw"></i>
+        <span>Paw Friends</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="login.html" class="btn-login">Iniciar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- SELECCIÓN DE TIPO DE REGISTRO -->
+  <section class="register-types">
+    <h2>Selecciona tu tipo de registro</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card" data-type="user">
+        <i class="fas fa-user"></i>
+        <h3>Usuario</h3>
+        <p>Registrarte como usuario te permitirá adoptar mascotas y seguir su progreso.</p>
+        <a href="#" class="btn-select">Seleccionar</a>
+      </div>
+      <div class="benefit-card" data-type="albergue">
+        <i class="fas fa-home"></i>
+        <h3>Albergue</h3>
+        <p>Registra tu albergue y publica animales para adopción, gestionando su cuidado.</p>
+        <a href="#" class="btn-select">Seleccionar</a>
+      </div>
+      <div class="benefit-card" data-type="proveedor">
+        <i class="fas fa-store"></i>
+        <h3>Proveedor</h3>
+        <p>Ofrece productos y servicios para mascotas y llega a familias que adoptan.</p>
+        <a href="#" class="btn-select">Seleccionar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btns = document.querySelectorAll('.btn-select');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const type = btn.parentElement.dataset.type;
+
+          if(type === 'user') window.location.href = 'registerusuario.html';
+          if(type === 'albergue') window.location.href = 'registeralbergue.html';
+          if(type === 'proveedor') window.location.href = 'registerproveedor.html';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
+

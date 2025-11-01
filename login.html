@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión | Paw Friends</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== ESTILOS LOGIN ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    body {
+      background-color: #f4f1ee;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #7d8f69;
+    }
+    .logo i {
+      font-size: 2rem;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #a68d6c;
+    }
+    .btn-login {
+      background-color: #7d8f69;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .btn-login:hover {
+      background-color: #6c7d58;
+    }
+    .auth-container {
+      padding: 4rem 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .auth-form {
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .auth-form h2 {
+      color: #7d8f69;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .auth-form .form-group {
+      margin-bottom: 1rem;
+    }
+    .auth-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+    .auth-form input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .auth-form button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 30px;
+      background-color: #7d8f69;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .auth-form button:hover {
+      background-color: #6c7d58;
+      transform: translateY(-2px);
+    }
+    .auth-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .auth-link a {
+      color: #7d8f69;
+      text-decoration: none;
+    }
+    .auth-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <i class="fas fa-paw"></i>
+      <span>Paw Friends</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="albergues.html">Albergues</a></li>
+      <li><a href="register.html" class="btn-login">Registrarse</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="auth-container">
+  <div class="auth-form">
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Correo electrónico</label>
+        <input type="email" id="loginEmail" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Contraseña</label>
+        <input type="password" id="loginPassword" required>
+      </div>
+      <button type="submit" class="btn-primary">Ingresar</button>
+    </form>
+    <p class="auth-link">¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+  </div>
+</section>
+
+<script>
+  // ==== Usuarios de prueba ====
+  const users = [
+    { email: 'admin@pawfriends.com', password: 'admin123', role: 'admin' },
+    { email: 'usuario@pawfriends.com', password: 'user123', role: 'user' },
+    { email: 'albergue@pawfriends.com', password: 'albergue123', role: 'albergue' },
+    { email: 'proveedor@pawfriends.com', password: 'proveedor123', role: 'proveedor' }
+  ];
+
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if(user) {
+      // Guardar sesión
+      localStorage.setItem("loggedUser", JSON.stringify(user));
+
+      // Redirección según rol
+      switch(user.role) {
+        case 'admin':
+          window.location.href = 'admin-dashboard.html';
+          break;
+        case 'albergue':
+          alert('Bienvenido Albergue');
+          window.location.href = 'alberguesdashboard.html';
+          break;
+        case 'proveedor':
+          alert('Bienvenido Proveedor');
+          window.location.href = 'proveedor-publicidad.html';
+          break;
+        default:
+          alert('Bienvenido ' + email);
+          window.location.href = 'index.html';
+      }
+    } else {
+      alert('Correo o contraseña incorrectos');
+    }
+  });
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Albergue | Paw Friends</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .albergue-profile-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .profile-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        .profile-details p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .profile-pets-section h2, .reviews-section h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .pets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .reviews-section {
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            margin-top: 30px;
+        }
+        .review-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .review-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        .review-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .review-rating {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="notification" class="notification"></div>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <span>Paw Friends</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="albergues.html">Albergues</a></li>
+                <li><a href="login.html" class="btn-login">Iniciar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="albergue-profile-container">
+        <div class="user-view">
+            <div class="profile-header">
+                <img id="profileLogo" src="" alt="Logo del Albergue">
+                <h1 id="profileNombre"></h1>
+                <div class="profile-details">
+                    <p id="profileDireccion"></p>
+                    <p id="profileHorario"></p>
+                </div>
+            </div>
+            <div class="profile-pets-section">
+                <h2>Mascotas para Adoptar</h2>
+                <div id="pets-grid" class="pets-grid">
+                    </div>
+            </div>
+            <div class="reviews-section">
+                <h2>Opiniones de Usuarios</h2>
+                <div id="reviewsContainer">
+                    </div>
+                <h3>Deja una reseña</h3>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="rating">Calificación:</label>
+                        <select id="rating" required>
+                            <option value="">Selecciona tu calificación</option>
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Tu comentario:</label>
+                        <textarea id="reviewText" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Enviar Reseña</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Paw Friends</h3>
+                <p>Rescatando y conectando mascotas con familias amorosas desde 2023.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-envelope"></i> info@pawfriends.com</p>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Paw Friends. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
